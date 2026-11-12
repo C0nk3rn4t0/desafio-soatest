@@ -12,7 +12,7 @@ suite:
       - name: BASE_URL
         value: https://pokeapi.co/api/v2
       - name: DB_URL
-        value: jdbc:postgresql://localhost:5432/pokemonDB?stringtype=unspecified
+        value: jdbc:postgresql://localhost:5432/pokemonDB
       - name: DB_USER
         value: postgres
       - name: DB_PASS
@@ -815,3 +815,153 @@ suite:
           type: text/plain
         dataSource:
           columnName: "Test 1: weight"
+  - $type: TestSuite
+    name: Escenario4
+    testID: 9
+    testLogicVariables:
+    - $type: TestLogicString
+      name: nombrePokemon
+      value:
+        $type: TestLogicVariableString
+        useLocalValue: true
+        originalValue: Chikorita
+        value: Chikorita
+    tests:
+    - $type: ToolTest
+      name: Data Generator Tool
+      testID: 10
+      tool:
+        $type: DataGeneratorTool
+        iconName: DataGeneratorTool
+        name: Generar Id y Fecha
+        generators:
+        - $type: NumberGenerator
+          min:
+            values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              min: 1
+          max:
+            values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              max: 999999999
+          name: idTransaccion
+        - $type: DateTimeGenerator
+          inputFormat:
+            values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              inputFormat: yyyy-MM-dd hh:mm:ss a
+          outputFormat:
+            values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              outputFormat: yyyy-MM-dd hh:mm:ss
+          name: fecha
+        virtualDSCreator:
+          writableColumns:
+          - customName: idTransaccion
+          - customName: fecha
+    - $type: ToolTest
+      name: DB Tool
+      testID: 11
+      tool:
+        $type: DbTool
+        iconName: DBTool
+        name: Agregar Pokemon
+        magicToken:
+          fixedValue:
+            $type: StringTestValue
+            value: GO
+        outputProviders:
+          xmlRequestOutput:
+            $type: NamedXMLToolOutputProvider
+            name: SQL Query
+          xmlResponseOutput:
+            $type: NamedXMLToolOutputProvider
+            name: Results as XML
+          objectOutput:
+            $type: ObjectOutputProvider
+            outputTools:
+            - $type: TrafficViewer
+              iconName: TrafficViewer
+              name: Traffic Viewer
+            name: Traffic Object
+        sqlQuery:
+          fixedValue:
+            $type: StringTestValue
+            useMultipleLines: true
+            value: "INSERT INTO captura_pokemon (id_transaccion, nombre_pokemon, fecha)\
+              \ \nVALUES ('${idTransaccion}', '${nombrePokemon}', '${fecha}')"
+        failOnSQLException: true
+        account:
+          local:
+            $type: DbConfigSettings
+            password: AwAAACxybkVISDYxcVVrcm1SR2ZUQXRxTWV0eHFrOGkyNit6eHo1TVhIemhoSEY4PQ==
+            uri: "${DB_URL}"
+            username: "${DB_USER}"
+            driver: org.postgresql.Driver
+    - $type: ToolTest
+      name: DB Tool
+      testID: 12
+      tool:
+        $type: DbTool
+        iconName: DBTool
+        name: Validacion
+        magicToken:
+          fixedValue:
+            $type: StringTestValue
+            value: GO
+        outputProviders:
+          xmlRequestOutput:
+            $type: NamedXMLToolOutputProvider
+            name: SQL Query
+          xmlResponseOutput:
+            $type: NamedXMLToolOutputProvider
+            outputTools:
+            - $type: XMLAssertionTool
+              iconName: XMLAssertor
+              name: Verificar
+              errorsOutput:
+                name: Errors
+              assertions:
+              - $type: NumericAssertion
+                timestamp: 1794504952503
+                name: Numeric Assertion
+                Assertion_XPath: /results/resultSet/rows/row/count
+                value:
+                  name: Numeric
+                  value:
+                    fixedValue:
+                      $type: StringTestValue
+                      value: 1
+              message:
+                $type: ExpectedXMLMessage
+                message: true
+            name: Results as XML
+          objectOutput:
+            $type: ObjectOutputProvider
+            outputTools:
+            - $type: TrafficViewer
+              iconName: TrafficViewer
+              name: Traffic Viewer
+            name: Traffic Object
+        sqlQuery:
+          fixedValue:
+            $type: StringTestValue
+            useMultipleLines: true
+            value: "   SELECT count(*) FROM captura_pokemon WHERE id_transaccion =\
+              \ '${idTransaccion}'"
+        failOnSQLException: true
+        account:
+          local:
+            $type: DbConfigSettings
+            password: AwAAACxybkVISDYxcVVrcm1SR2ZUQXRxTWV0eHFrOGkyNit6eHo1TVhIemhoSEY4PQ==
+            uri: "${DB_URL}"
+            username: "${DB_USER}"
+            driver: org.postgresql.Driver
