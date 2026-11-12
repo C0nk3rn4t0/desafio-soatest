@@ -586,3 +586,225 @@ suite:
           fixedValue:
             $type: StringTestValue
           selectedIndex: 1
+  - $type: TestSuite
+    name: Escenario3
+    testID: 6
+    testLogicVariables:
+    - $type: TestLogicString
+      name: weightKg
+      value:
+        $type: TestLogicVariableString
+        useLocalValue: true
+        originalValue: ""
+        value: ""
+    tests:
+    - $type: RESTClientToolTest
+      name: REST Client
+      testID: 7
+      tool:
+        $type: RESTClient
+        iconName: RESTClient
+        name: Get Snorlax
+        outputTools:
+        - $type: GenericDataBank
+          iconName: XMLDataBank
+          name: JSON Data Bank
+          wrappedTool:
+            $type: XMLtoDataSource
+            iconName: XMLDataBank
+            name: XML Data Bank
+            selectedXPaths:
+            - elementOption: 1
+              contentOption: 1
+              XMLDataBank_ExtractXPath: "/root/weight[1]/text()"
+              mode: 1
+            canonicalizeOutput: true
+            xmlMessage: true
+            virtualDSCreator:
+              writableColumns:
+              - customName: weightHg
+          conversionStrategy:
+            dataFormatName: JSON
+            conversionStrategyId: JSON
+            conversionStrategyClassName: com.parasoft.xml.convert.json.JsonConversionStrategy
+        formJson:
+          value:
+            $type: ElementValue
+            writeType: true
+            hasReference: true
+            qnameAsString: :root
+            replacedColumn: ""
+            values:
+            - $type: ComplexValue
+              replacedColumn: ""
+              attributes:
+              - replacedColumn: ""
+                value:
+                  $type: StringValue
+                  replacedColumn: ""
+                  value: object
+                useValue: true
+              compositorValue: true
+              compositorValueObj:
+                replacedColumn: ""
+                values:
+                  $type: CompositorValueSetCollectionSet
+                  set:
+                  - $type: CompositorValueSet
+          elementTypeName: root
+        jsonBuilder:
+          hasValue: true
+          value:
+            $type: JSONObjectValue
+            nameIsNull: true
+        formInput:
+          value:
+            $type: ElementValue
+            writeType: true
+            hasReference: true
+            qnameAsString: ":"
+            replacedColumn: ""
+            values:
+            - $type: ComplexValue
+              replacedColumn: ""
+              compositorValue: true
+              compositorValueObj:
+                replacedColumn: ""
+                values:
+                  $type: CompositorValueSetCollectionSet
+                  set:
+                  - $type: CompositorValueSet
+        constrainToSchema: false
+        jmsMessageOutputProvider:
+          $type: JMSMessageOutputProvider
+          jmsOutputProviderRequest:
+            $type: JMSOutputProvider
+            name: Request Object
+            menuName: Object
+          jmsOutputProviderResponse:
+            $type: JMSOutputProvider
+            name: Response Message Object
+            menuName: Message Object
+        validResponseRange:
+          validResponseRange:
+            values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              validResponseRange: 200
+        router:
+          values:
+          - $type: ScriptedValue
+          fixedValue:
+            $type: StringTestValue
+            HTTPClient_Endpoint: "${BASE_URL}/pokemon/snorlax"
+        transportProperties:
+          manager:
+            protocol: 1
+            properties:
+            - $type: HTTPClientHTTPProperties
+              followRedirects:
+                bool: true
+              common:
+                method:
+                  values:
+                  - $type: ScriptedValue
+                  fixedValue:
+                    $type: HTTPMethodTestValue
+                    method: GET
+              protocol: 1
+              keepAlive1_1:
+                bool: true
+          messageExchangePattern:
+            inverted: true
+        outputProviders:
+          requestHeader:
+            $type: HTTPNamedToolOutputProvider
+            menuName: Transport Header
+            name: Request Transport Header
+          responseHeader:
+            $type: HTTPNamedToolOutputProvider
+            menuName: Transport Header
+            name: Response Transport Header
+          xmlRequestOutput:
+            $type: NamedXMLToolOutputProvider
+            menuName: Traffic
+            name: Request Traffic
+          trafficOutput:
+            m_name: Traffic Stream
+          objectOutput:
+            $type: ObjectOutputProvider
+            outputTools:
+            - $type: TrafficViewer
+              iconName: TrafficViewer
+              name: Traffic Viewer
+            name: Traffic Object
+        literal:
+          use: 1
+          text:
+            MessagingClient_LiteralMessage: ""
+            type: application/json
+          dataSource:
+            columnName: abilityName
+        mode: Literal
+        literalQuery:
+          isPropertiesRef: true
+        literalPath:
+          pathElements:
+          - values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              value: pokemon
+          - values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              value: snorlax
+        resourceMethod:
+          httpMethod: GET
+        baseUrl:
+          values:
+          - $type: ScriptedValue
+          - $type: WadlTestValue
+          fixedValue:
+            $type: StringTestValue
+          selectedIndex: 1
+    - $type: ToolTest
+      name: Extension Tool
+      testID: 8
+      tool:
+        $type: MethodTool
+        iconName: Method
+        name: Convertir a Kilo
+        method:
+          hasCode: true
+          code:
+            $type: ScriptCode
+            input:
+              useText: true
+              textInput:
+                $type: ScriptingTextInput
+                text: "import com.parasoft.api.*\r\n\r\ndef convertirAKg(input, context)\
+                  \ {\r\n    def pesoHg = context.getValue(\"Generated Data Source\"\
+                  , \"weightHg\")\r\n    def pesoKg = Double.parseDouble(pesoHg) /\
+                  \ 10\r\n\r\n    context.setValue(\"weightKg\", String.valueOf(pesoKg))\r\
+                  \n    Application.showMessage(\"Peso: \" + pesoKg + \" kg\")\r\n\
+                  \r\n    return String.valueOf(pesoKg)\r\n}"
+          hasMethodId: true
+          methodId:
+            $type: ScriptMethodIdentifier
+            functionName: convertirAKg
+            arguments:
+            - java.lang.Object
+            - java.lang.Object
+          useDataSource: true
+      writeInput: true
+      inputType: InputUsable
+      input:
+        use: 1
+        text:
+          text: ""
+          type: text/plain
+        dataSource:
+          columnName: "Test 1: weight"
