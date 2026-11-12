@@ -1,1 +1,16 @@
-#Wed Nov 11 18:15:53 CLST 2026
+#Thu Nov 12 01:58:08 CLST 2026
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/datasources=ds_1361796461_1794457845952_1633353409
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.closeconn=true
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.contain_header=true
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.csv_encoding=UTF-8
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.csv_file=${project_loc\:desafio_pokeapi}/data/pokemon.csv
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.first_row=0
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.first_row.internal=1
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.last_row=0
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.last_row.internal=1
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.name=Pokemons
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.quote="
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.separator=,
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.type=CSV
+.datasources/ds-module.wk\:///desafio_pokeapi/desafio_pokeapi.tst\#0000000000\#0000000004/ds_1361796461_1794457845952_1633353409.use_all_rows=true
+project.path=/desafio_pokeapi

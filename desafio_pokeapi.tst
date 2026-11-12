@@ -378,3 +378,211 @@ suite:
           fixedValue:
             $type: StringTestValue
           selectedIndex: 1
+  - $type: TestSuite
+    name: Escenario2
+    testID: 4
+    dataSources:
+    - id: ds_1361796461_1794457845952_1633353409
+      impl:
+        $type: CSVDataSource
+        file: true
+        fileObj:
+          resolveVariablePath: true
+          backupPath: data\pokemon.csv
+          path: "${project_loc:desafio_pokeapi}/data/pokemon.csv"
+        data: true
+        columnNames:
+        - PokemonName
+        - ExpectedType
+      name: Pokemons
+      useAllRows: true
+    tests:
+    - $type: RESTClientToolTest
+      name: REST Client
+      testID: 5
+      tool:
+        $type: RESTClient
+        dataSourceNames:
+        - Pokemons
+        iconName: RESTClient
+        name: Get Pokemon
+        outputTools:
+        - $type: GenericAssertionTool
+          dataSourceNames:
+          - Pokemons
+          iconName: XMLAssertor
+          name: Tipo Pokemon
+          wrappedTool:
+            $type: XMLAssertionTool
+            dataSourceNames:
+            - Pokemons
+            iconName: XMLAssertor
+            name: XML Assertor
+            errorsOutput:
+              name: Errors
+            assertions:
+            - $type: ValueAssertion
+              timestamp: 1794459393186
+              name: Value Assertion
+              extractEntireElement: true
+              Assertion_XPath: "/root/types/item[1]/type/name/string()"
+              value:
+                name: Value
+                value:
+                  fixedValue:
+                    $type: StringTestValue
+                  parameterizedValue:
+                    column: ExpectedType
+                  selectedIndex: -2
+            message:
+              $type: ExpectedXMLMessage
+              message: true
+          conversionStrategy:
+            dataFormatName: JSON
+            conversionStrategyId: JSON
+            conversionStrategyClassName: com.parasoft.xml.convert.json.JsonConversionStrategy
+        formJson:
+          value:
+            $type: ElementValue
+            writeType: true
+            hasReference: true
+            qnameAsString: :root
+            replacedColumn: ""
+            values:
+            - $type: ComplexValue
+              replacedColumn: ""
+              attributes:
+              - replacedColumn: ""
+                value:
+                  $type: StringValue
+                  replacedColumn: ""
+                  value: object
+                useValue: true
+              compositorValue: true
+              compositorValueObj:
+                replacedColumn: ""
+                values:
+                  $type: CompositorValueSetCollectionSet
+                  set:
+                  - $type: CompositorValueSet
+          elementTypeName: root
+        jsonBuilder:
+          hasValue: true
+          value:
+            $type: JSONObjectValue
+            nameIsNull: true
+        formInput:
+          value:
+            $type: ElementValue
+            writeType: true
+            hasReference: true
+            qnameAsString: ":"
+            replacedColumn: ""
+            values:
+            - $type: ComplexValue
+              replacedColumn: ""
+              compositorValue: true
+              compositorValueObj:
+                replacedColumn: ""
+                values:
+                  $type: CompositorValueSetCollectionSet
+                  set:
+                  - $type: CompositorValueSet
+        constrainToSchema: false
+        jmsMessageOutputProvider:
+          $type: JMSMessageOutputProvider
+          jmsOutputProviderRequest:
+            $type: JMSOutputProvider
+            name: Request Object
+            menuName: Object
+          jmsOutputProviderResponse:
+            $type: JMSOutputProvider
+            name: Response Message Object
+            menuName: Message Object
+        validResponseRange:
+          validResponseRange:
+            values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              validResponseRange: 200
+        router:
+          values:
+          - $type: ScriptedValue
+          fixedValue:
+            $type: StringTestValue
+            HTTPClient_Endpoint: "${BASE_URL}/pokemon/${PokemonName}"
+        transportProperties:
+          manager:
+            protocol: 1
+            properties:
+            - $type: HTTPClientHTTPProperties
+              followRedirects:
+                bool: true
+              common:
+                method:
+                  values:
+                  - $type: ScriptedValue
+                  fixedValue:
+                    $type: HTTPMethodTestValue
+                    method: GET
+              protocol: 1
+              keepAlive1_1:
+                bool: true
+          messageExchangePattern:
+            inverted: true
+        outputProviders:
+          requestHeader:
+            $type: HTTPNamedToolOutputProvider
+            menuName: Transport Header
+            name: Request Transport Header
+          responseHeader:
+            $type: HTTPNamedToolOutputProvider
+            menuName: Transport Header
+            name: Response Transport Header
+          xmlRequestOutput:
+            $type: NamedXMLToolOutputProvider
+            menuName: Traffic
+            name: Request Traffic
+          trafficOutput:
+            m_name: Traffic Stream
+          objectOutput:
+            $type: ObjectOutputProvider
+            outputTools:
+            - $type: TrafficViewer
+              iconName: TrafficViewer
+              name: Traffic Viewer
+            name: Traffic Object
+        literal:
+          use: 1
+          text:
+            MessagingClient_LiteralMessage: ""
+            type: application/json
+          dataSource:
+            columnName: ExpectedType
+        mode: Literal
+        literalQuery:
+          isPropertiesRef: true
+        literalPath:
+          pathElements:
+          - values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+              value: pokemon
+          - values:
+            - $type: ScriptedValue
+            fixedValue:
+              $type: StringTestValue
+            parameterizedValue:
+              column: PokemonName
+            selectedIndex: -2
+        resourceMethod:
+          httpMethod: GET
+        baseUrl:
+          values:
+          - $type: ScriptedValue
+          - $type: WadlTestValue
+          fixedValue:
+            $type: StringTestValue
+          selectedIndex: 1
