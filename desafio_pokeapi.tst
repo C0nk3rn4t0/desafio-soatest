@@ -11,6 +11,13 @@ suite:
     - variables:
       - name: BASE_URL
         value: https://pokeapi.co/api/v2
+      - name: DB_URL
+        value: jdbc:postgresql://localhost:5432/pokemonDB?stringtype=unspecified
+      - name: DB_USER
+        value: postgres
+      - name: DB_PASS
+        maskValue: true
+        value: AwAAACxFMzJuQVY5cGdlZk1rbFRnZ0tEdzUzYkgvUllSdkZKU3BBVTN6eXJhK3N3PQ==
       name: Local
       active: true
   lastModifiedBy: ed_de
